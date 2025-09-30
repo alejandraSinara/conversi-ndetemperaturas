@@ -1,0 +1,24 @@
+{
+  "name": "conversi-ndetemperaturas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alejandraSinara/conversi-ndetemperaturas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alejandraSinara/conversi-ndetemperaturas/issues"
+  },
+  "homepage": "https://github.com/alejandraSinara/conversi-ndetemperaturas#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "prompt-sync": "^4.2.0"
+  }
+}

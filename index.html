@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Temperaturas</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversor de Temperaturas</h1>
+        
+        <div class="input-group">
+            <label for="temperatureInput">Temperatura a convertir:</label>
+            <input type="number" id="temperatureInput" placeholder="Ingresa el valor de temperatura">
+        </div>
+        
+        <div class="input-group">
+            <label for="unitSelect">Unidad de temperatura:</label>
+            <select id="unitSelect">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div>
+        
+        <button id="convertBtn">Convertir Temperatura</button>
+        
+        <div class="error-message" id="errorMessage"></div>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">Resultados de Conversión</div>
+            <div class="temperature-display">
+                <div class="temp-card">
+                    <div>Celsius</div>
+                    <div class="temp-value celsius" id="celsiusValue">0.00°C</div>
+                    <div>Escala métrica</div>
+                </div>
+                <div class="temp-card">
+                    <div>Fahrenheit</div>
+                    <div class="temp-value fahrenheit" id="fahrenheitValue">32.00°F</div>
+                    <div>Escala imperial</div>
+                </div>
+                <div class="temp-card">
+                    <div>Kelvin</div>
+                    <div class="temp-value kelvin" id="kelvinValue">273.15K</div>
+                    <div>Escala absoluta</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-title">Información sobre las escalas de temperatura</div>
+            <div class="info-text">
+                <p><strong>Celsius (°C):</strong> Escala de temperatura utilizada en la mayoría de los países. El punto de congelación del agua es 0°C y el punto de ebullición es 100°C.</p>
+                <p><strong>Fahrenheit (°F):</strong> Escala utilizada principalmente en Estados Unidos. El punto de congelación del agua es 32°F y el punto de ebullición es 212°F.</p>
+                <p><strong>Kelvin (K):</strong> Escala absoluta de temperatura utilizada en ciencias. El cero absoluto (0K) es la temperatura más baja posible.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const temperatureInput = document.getElementById('temperatureInput');
+            const unitSelect = document.getElementById('unitSelect');
+            const convertBtn = document.getElementById('convertBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const errorMessage = document.getElementById('errorMessage');
+            const celsiusValue = document.getElementById('celsiusValue');
+            const fahrenheitValue = document.getElementById('fahrenheitValue');
+            const kelvinValue = document.getElementById('kelvinValue');
+            
+            // Función para convertir temperaturas
+            function convertTemperature() {
+                // Ocultar mensaje de error y resultados previos
+                errorMessage.style.display = 'none';
+                
+                // Obtener y validar el valor de entrada
+                const inputValue = parseFloat(temperatureInput.value);
+                
+                if (isNaN(inputValue)) {
+                    showError("Por favor, ingresa un valor numérico válido.");
+                    return;
+                }
+                
+                // Obtener la unidad seleccionada
+                const selectedUnit = unitSelect.value;
+                
+                let celsius, fahrenheit, kelvin;
+                
+                // Convertir a Celsius primero
+                switch(selectedUnit) {
+                    case 'celsius':
+                        celsius = inputValue;
+                        break;
+                    case 'fahrenheit':
+                        celsius = (inputValue - 32) * 5/9;
+                        break;
+                    case 'kelvin':
+                        celsius = inputValue - 273.15;
+                        break;
+                }
+                
+                // Calcular las otras temperaturas
+                fahrenheit = (celsius * 9/5) + 32;
+                kelvin = celsius + 273.15;
+                
+                // Mostrar los resultados
+                celsiusValue.textContent = `${celsius.toFixed(2)}°C`;
+                fahrenheitValue.textContent = `${fahrenheit.toFixed(2)}°F`;
+                kelvinValue.textContent = `${kelvin.toFixed(2)}K`;
+                
+                // Mostrar el contenedor de resultados
+                resultContainer.classList.add('active');
+            }
+            
+            // Función para mostrar errores
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                resultContainer.classList.remove('active');
+            }
+            
+            // Event listeners
+            convertBtn.addEventListener('click', convertTemperature);
+            
+            temperatureInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    convertTemperature();
+                }
+            });
+            
+            // Inicializar con un valor por defecto
+            temperatureInput.value = "25";
+            convertTemperature();
+        });
+    </script>
+</body>
+</html>
